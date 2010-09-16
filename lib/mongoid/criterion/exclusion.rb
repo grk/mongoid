@@ -50,7 +50,7 @@ module Mongoid #:nodoc:
       #
       # Options:
       #
-      # args: A list of field names to retrict the returned fields to.
+      # args: A list of field names to restrict the returned fields to.
       #
       # Example:
       #
