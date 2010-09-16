@@ -68,7 +68,7 @@ module Mongoid #:nodoc:
       #
       # A +Hash+ with field values as keys, arrays of documents as values.
       def group
-        field = options[:fields].first
+        field = options[:fields].keys.first
         execute.group_by { |doc| doc.send(field) }
       end
 

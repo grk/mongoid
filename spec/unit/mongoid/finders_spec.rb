@@ -407,7 +407,7 @@ describe Mongoid::Finders do
 
     it "returns a new criteria with select conditions added" do
       criteria = Person.only(:title, :age)
-      criteria.options.should == { :fields => [ :title, :age ] }
+      criteria.options.should == { :fields => { :title => 1, :age => 1 } }
     end
 
   end

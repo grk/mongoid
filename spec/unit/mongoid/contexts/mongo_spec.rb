@@ -20,7 +20,7 @@ describe Mongoid::Contexts::Mongo do
 
       it "calls group on the collection with the aggregate js" do
         @collection.expects(:group).with(
-          [:field1],
+          {:field1 => 1},
           {},
           {:count => 0},
           @reduce,
@@ -187,7 +187,7 @@ describe Mongoid::Contexts::Mongo do
 
         before do
           @criteria.only(:title)
-          @expected_options = { :skip => 20, :fields => [ :title, :_type ] }
+          @expected_options = { :skip => 20, :fields => { :title => 1, :_type => 1 } }
         end
 
         it "adds _type to the fields" do

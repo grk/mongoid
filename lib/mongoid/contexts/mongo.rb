@@ -113,7 +113,7 @@ module Mongoid #:nodoc:
       # A +Hash+ with field values as keys, arrays of documents as values.
       def group
         klass.collection.group(
-          options[:fields],
+          [options[:fields].keys.first],
           selector,
           { :group => [] },
           Javascript.group
@@ -271,8 +271,12 @@ module Mongoid #:nodoc:
       # empty. If fields have been defined then _type will be included as well.
       def process_options
         fields = options[:fields]
-        if fields && fields.size > 0 && !fields.include?(:_type)
-          fields << :_type
+        if fields
+          if fields.is_a?(Hash) && !fields.has_value?(0)
+            fields[:_type] = 1
+          elsif fields.is_a?(Array) && fields.size > 0 && !fields.include?(:_type)
+            fields << :_type
+          end
           options[:fields] = fields
         end
         options.dup

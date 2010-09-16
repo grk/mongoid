@@ -58,7 +58,33 @@ module Mongoid #:nodoc:
       #
       # Returns: <tt>self</tt>
       def only(*args)
-        @options[:fields] = args.flatten if args.any?; self
+        if args.any?
+          @options[:fields] = args.flatten.each_with_object({}) { |field, hash|
+            hash[field] = 1
+          }
+        end
+        self
+      end
+
+      # Adds a criterion to the +Criteria+ that specifies fields that
+      # will not get returned from the Document.
+      #
+      # Options:
+      #
+      # args: A list of field names to exclude from the returned fields.
+      #
+      # Example:
+      #
+      # <tt>criteria.except(:field1, :field2)</tt>
+      #
+      # Returns: <tt>self</tt>
+      def except(*args)
+        if args.any?
+          @options[:fields] = args.flatten.each_with_object({}) { |field, hash|
+            hash[field] = 0
+          }
+        end
+        self
       end
     end
   end
