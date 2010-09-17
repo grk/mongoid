@@ -412,6 +412,15 @@ describe Mongoid::Finders do
 
   end
 
+  describe ".except" do
+
+    it "returns a new criteria with exclude conditions added" do
+      criteria = Person.except(:title, :age)
+      criteria.options.should == { :fields => { :title => 0, :age => 0 } }
+    end
+
+  end
+
   describe ".sum" do
 
     before do
